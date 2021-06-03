@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EIER UHR</title>
+    <link rel="mainfest" href="mainfest.json" />
+
+    <!-- CSS -->
+    <style>
+      /* === Small CSS Reset === */
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      *,
+      *::after,
+      *::before {
+        box-sizing: border-box;
+      }
+      .background-dark {
+        background-color: #262626;
+      }
+
+      .center {
+        display: flex;
+        justify-content: center;
+      }
+
+      .margin-top {
+        margin-top: 50px;
+        margin-bottom: 50px;
+      }
+
+      .timer {
+        font-size: 4rem;
+        color: white;
+        font-family: "Roboto", sans-serif;
+      }
+
+      .button {
+        cursor: pointer;
+      }
+
+      .button:active {
+        width: 97vw;
+      }
+    </style>
+
+    <!-- JS SCRIPT -->
+    <script>
+      let alarm = new Audio("sound/hands.wav");
+      let timerStarted = false;
+
+      function startTimer() {
+        if (!timerStarted) {
+          let startTime = new Date().getTime();
+          let fiveMinutes = 1000 * 60 * 5;
+          let endTime = startTime + fiveMinutes;
+
+          setInterval(function () {
+            let timeLeft = endTime - new Date().getTime();
+
+            if (timeLeft > 0) {
+              let minutes = timeLeft / (1000 * 60);
+              minutes = Math.floor(minutes);
+              let seconds = (timeLeft / 1000) % 60;
+              seconds = Math.round(seconds);
+              seconds = ("0" + seconds).slice(-2);
+              let text = "0" + minutes + ":" + seconds;
+              timer.innerHTML = text;
+            } else {
+              alarm.play();
+              timer.innerHTML = "00 : 00";
+            }
+          }, 1000);
+          timerStarted = true;
+        }
+      }
+    </script>
+  </head>
+
+  <body class="background-dark">
+    <div class="pic">
+      <img src="img/burger.png" alt="burger" />
+    </div>
+
+    <div class="center margin-top">
+      <img src="img/egg.svg" alt="egg" />
+    </div>
+
+    <div class="center timer" id="timer">05:00</div>
+
+    <div class="center margin-top button">
+      <img onClick="startTimer()" src="img/button.png" alt="Button" />
+    </div>
+  </body>
+</html>
